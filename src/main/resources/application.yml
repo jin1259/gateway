@@ -1,0 +1,66 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: booking
+          uri: http://localhost:8081
+          predicates:
+            - Path=/bookings/**,/myPages/**
+        - id: payment
+          uri: http://localhost:8084
+          predicates:
+            - Path=/payments/** 
+        - id: exhibition
+          uri: http://localhost:8085
+          predicates:
+            - Path=/exhibitions/** 
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: booking
+          uri: http://localhost:8081
+          predicates:
+            - Path=/bookings/**,/myPages/**
+        - id: Payment
+          uri: http://localhost:8084
+          predicates:
+            - Path=/payments/** 
+        - id: Exhibition
+          uri: http://localhost:8085
+          predicates:
+            - Path=/exhibitions/** 
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
