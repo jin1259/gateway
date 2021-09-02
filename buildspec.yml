@@ -47,7 +47,7 @@ phases:
             labels:
               app: $_PROJECT_NAME
           spec:
-            type: LoadBalancer #추가
+            #type: LoadBalancer #추가
             ports:
               - port: 8080
                 targetPort: 8080
@@ -76,21 +76,5 @@ phases:
                   - name: $_PROJECT_NAME
                     image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$_PROJECT_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
                     ports:
-                      - containerPort: 8080
-                    readinessProbe:
-                      httpGet:
-                        path: /actuator/health
-                        port: 8080
-                      initialDelaySeconds: 10
-                      timeoutSeconds: 2
-                      periodSeconds: 5
-                      failureThreshold: 10
-                    livenessProbe:
-                      httpGet:                         # 아래 liness 테스트시 이부분 삭제
-                        path: /actuator/health         # 아래 liness 테스트시 이부분 삭제
-                        port: 8080                     # 아래 liness 테스트시 이부분 삭제
-                      initialDelaySeconds: 120         # 아래 liness 테스트시 이부분 삭제
-                      timeoutSeconds: 2                # 아래 liness 테스트시 이부분 삭제
-                      periodSeconds: 5                 # 아래 liness 테스트시 이부분 삭제
-                      failureThreshold: 5              # 아래 liness 테스트시 이부분 삭제     
+                      - containerPort: 8080   
           EOF
