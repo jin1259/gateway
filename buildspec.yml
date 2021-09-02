@@ -1,5 +1,5 @@
 version: 0.2
-
+    
 env:
   variables:
     _PROJECT_NAME: "user06-gateway"
@@ -80,4 +80,3 @@ phases:
 #cache:
   #paths:
     #- '/root/.m2/**/*' 
-
