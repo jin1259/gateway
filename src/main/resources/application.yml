@@ -40,15 +40,15 @@ spring:
     gateway:
       routes:
         - id: booking
-          uri: http://localhost:8081
+          uri: http://booking:8080
           predicates:
             - Path=/bookings/**,/myPages/**
         - id: Payment
-          uri: http://localhost:8084
+          uri: http://payment:8080
           predicates:
             - Path=/payments/** 
         - id: Exhibition
-          uri: http://localhost:8085
+          uri: http://exhibition:8080
           predicates:
             - Path=/exhibitions/** 
       globalcors:
