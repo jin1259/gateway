@@ -1,5 +1,5 @@
 version: 0.2
-    
+
 env:
   variables:
     _PROJECT_NAME: "user06-gateway"
@@ -7,7 +7,7 @@ env:
 phases:
   install:
     runtime-versions:
-      java: corretto8
+      java: corretto8 
       docker: 18
     commands:
       - echo install kubectl
@@ -47,7 +47,6 @@ phases:
             labels:
               app: $_PROJECT_NAME
           spec:
-            #type: LoadBalancer #추가
             ports:
               - port: 8080
                 targetPort: 8080
@@ -76,5 +75,24 @@ phases:
                   - name: $_PROJECT_NAME
                     image: $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$_PROJECT_NAME:$CODEBUILD_RESOLVED_SOURCE_VERSION
                     ports:
-                      - containerPort: 8080   
+                      - containerPort: 8080
+                    readinessProbe:
+                      httpGet:
+                        path: /actuator/health
+                        port: 8080
+                      initialDelaySeconds: 10
+                      timeoutSeconds: 2
+                      periodSeconds: 5
+                      failureThreshold: 10
+                    livenessProbe:
+                      httpGet:
+                        path: /actuator/health
+                        port: 8080
+                      initialDelaySeconds: 120
+                      timeoutSeconds: 2
+                      periodSeconds: 5
+                      failureThreshold: 5
           EOF
+#cache:
+#  paths:
+#    - '/root/.m2/**/*'
